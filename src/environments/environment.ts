@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://spartacus-demo.eastus.cloudapp.azure.com:8443',
+  baseSite: 'electronics-spa'
 };
 
 /*

@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+
+$styleVersion: 3.0;
+@import '~@spartacus/styles/index';
+
+
+cx-searchbox label input{
+    color: #ffffff;
+    background-color: #cccccc;
+}
+
+@media(min-width: 786px){    
+    header:not(.is-expanded) cx-page-layout.navigation{
+        display: block;
+    }
+    cx-searchbox label{
+        background-color: #ffffff;
+        color: #000000;
+        border-radius: 6px;
+        input{
+            color: #000000;
+            background-color: #ffffff;
+        }
+    }
+}
+
+header {
+   
+.header {
+    max-width: 100%;
+    background-color: #232f3e;
+}
+
+.NavigationBar{
+    background-color: #37475a;
+    padding: 0 20px;
+}
+ 
+}
+.custom-logo{
+    font-size: 36px;
+    font-weight: 600;
+    color: #ffffff;
+    padding: 10px;
+    :hover{
+        text-decoration: none !important;
+        color: #ffffff !important;
+    }
+}
+a {
+    color: #ffffff;
+}
+a:hover{
+    text-decoration: none !important;
+    color: #ffffff !important;
+}
+.results .products a cx-media{
+    height: 60px;
+    width: 60px;
+}
+.results .products a {
+    display: flex!important;
+    .btn-primary{
+        padding: 0 15px;
+        width: auto;
+    }
+}

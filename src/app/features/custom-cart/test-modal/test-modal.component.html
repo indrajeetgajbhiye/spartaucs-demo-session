@@ -1,0 +1,19 @@
+<div class="modal-box">
+    <h2>Solds Tos</h2>
+   <div class="sold-to-container">
+       <div>
+        <ng-container *ngIf='soldTos$ | async as soldTos'>
+            <div *ngFor="let soldTo of soldTos" (click)="selectSoldTo(soldTo)">
+                {{soldTo.name}}
+            </div>
+        </ng-container>
+       </div>
+       <div *ngIf="selectedSoldTo">
+           Selected Sold To {{selectedSoldTo?.name}}
+       </div>
+   </div>
+    <div class="actions">
+        <button class="btn btn-primary" (click)="dismissModal('cancel')">Cancel</button>
+        <button class="btn btn-secondary" (click)="dismissModal('ok')">OK</button>
+    </div>
+</div>

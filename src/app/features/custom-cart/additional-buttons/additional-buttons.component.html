@@ -1,0 +1,16 @@
+
+<ng-contrainer *ngIf="cartId$ | async as cartId">
+    <button (click)="saveCart()">Save Cart</button>
+    <button (click)="deleteCart(cartId)">Delete cart</button>
+    <button>Load save cart</button>
+</ng-contrainer>
+
+
+
+<button (click)="activateMsg()">
+    Activate Global Message
+</button>
+
+<button (click)="activateModal()">
+    Activate Modal
+</button>

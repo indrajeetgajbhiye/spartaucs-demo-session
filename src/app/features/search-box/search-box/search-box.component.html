@@ -1,0 +1,146 @@
+<label class="searchbox" [class.dirty]="!!searchInput.value">
+    <input
+      #searchInput
+      [placeholder]="'searchBox.placeholder' | cxTranslate"
+      autocomplete="off"
+      aria-describedby="initialDescription"
+      aria-controls="results"
+      [attr.aria-label]="'common.search' | cxTranslate"
+      (focus)="open()"
+      (click)="open()"
+      (input)="search(searchInput.value)"
+      (blur)="close($event)"
+      (keydown.escape)="close($event)"
+      (keydown.enter)="
+        close($event, true);
+        launchSearchResult($event, searchInput.value);
+        updateChosenWord(searchInput.value)
+      "
+      (keydown.arrowup)="focusPreviousChild($event)"
+      (keydown.arrowdown)="focusNextChild($event)"
+      value="{{ chosenWord }}"
+    />
+  
+    <!-- <button
+      [attr.aria-label]="'reset'"
+      (mousedown)="clear(searchInput)"
+      (keydown.enter)="clear(searchInput)"
+      class="reset"
+    >
+      <cx-icon [type]="iconTypes.RESET"></cx-icon>
+    </button> -->
+  
+    <div role="presentation" class="search-icon">
+      <cx-icon [type]="iconTypes.SEARCH"></cx-icon>
+    </div>
+  
+    <!-- <button
+      [attr.aria-label]="'common.search' | cxTranslate"
+      class="search"
+      (click)="open()"
+    >
+      <cx-icon [type]="iconTypes.SEARCH"></cx-icon>
+    </button> -->
+  </label>
+  
+  <div
+    *ngIf="results$ | async as result"
+    class="results"
+    id="results"
+    (click)="close($event, true)"
+    role="listbox"
+  >
+    <div
+      *ngIf="result.message"
+      class="message"
+      [innerHTML]="result.message"
+    ></div>
+  
+    <!-- <ul
+      class="suggestions"
+      attr.aria-label="{{ 'searchBox.ariaLabelSuggestions' | cxTranslate }}"
+      tabindex="0"
+    >
+      <li *ngFor="let suggestion of result.suggestions">
+        <a
+          [innerHTML]="suggestion | cxHighlight: searchInput.value"
+          [routerLink]="
+            {
+              cxRoute: 'search',
+              params: { query: suggestion }
+            } | cxUrl
+          "
+          (keydown.arrowup)="focusPreviousChild($event)"
+          (keydown.arrowdown)="focusNextChild($event)"
+          (keydown.enter)="close($event, true)"
+          (keydown.escape)="close($event, true)"
+          (blur)="close($event)"
+          (mousedown)="preventDefault($event)"
+          (click)="
+            dispatchSuggestionEvent({
+              freeText: searchInput.value,
+              selectedSuggestion: suggestion,
+              searchSuggestions: result.suggestions
+            });
+            updateChosenWord(suggestion)
+          "
+        >
+        </a>
+      </li>
+    </ul> -->
+  
+    <div
+      class="products"
+      *ngIf="result.products"
+      attr.aria-label="{{ 'searchBox.ariaLabelProducts' | cxTranslate }}"
+      tabindex="0"
+    >
+      <div *ngFor="let product of result.products" >
+        <a
+          [routerLink]="
+            {
+              cxRoute: 'product',
+              params: product
+            } | cxUrl
+          "
+          [class.has-media]="config.displayProductImages"
+          (keydown.arrowup)="focusPreviousChild($event)"
+          (keydown.arrowdown)="focusNextChild($event)"
+          (keydown.enter)="close($event, true)"
+          (keydown.escape)="close($event, true)"
+          (blur)="close($event)"
+          (mousedown)="preventDefault($event)"
+          (click)="
+            dispatchProductEvent({
+              freeText: searchInput.value,
+              productCode: product.code
+            })
+          "
+          class="product-line"
+        >
+          <cx-media
+            *ngIf="config.displayProductImages"
+            [container]="product.images?.PRIMARY"
+            format="thumbnail"
+            role="presentation"
+            class="flex-15"
+          ></cx-media>
+          <div class="flex-30">
+          <div class="name">{{product.code}}</div>
+          <div class="name" [innerHTML]="product.nameHtml"></div>
+          </div>
+          <div [ngClass]="product?.stock?.stockLevelStatus === 'inStock' ? 'stock-available' : 'no-stock'" class="flex-15">
+              {{product?.stock?.stockLevelStatus === 'inStock' ? 'In Stock' : 'Out of Stock'}}
+          </div>
+          <div class="flex-40">
+            <cx-add-to-cart [showQuantity]='false' [product]="product" [productCode]="product.code">add</cx-add-to-cart>
+          </div>
+        </a>
+    </div>
+    <div class="action-holder">
+      <p>{{searchQuery}}</p>
+      <a (click)="$event.stopPropagation();launchSearchResult($event, searchQuery)" [routerLink]="'search/'+searchQuery"   class="btn btn-secondary" autofocus>Go To Results</a>
+    </div>
+</div>
+  </div>
+  

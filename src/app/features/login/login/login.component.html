@@ -1,0 +1,37 @@
+<ng-container *ngIf="user$ | async as user; else login">
+    <div class="cx-login-greet" (click)="toggle()">
+     ICON
+    </div>
+    <!-- <pre>
+      {{node$ | async | json}}
+    </pre> -->
+    <ng-container *ngIf="node$ | async as nodes; else nothing">
+      <div>
+        {{nodes?.MyReplenishmentOrdersLink_AbstractCMSComponent?.linkName}}
+      </div>
+    </ng-container>
+    <cx-page-slot position="HeaderLinks"></cx-page-slot>
+
+    <!-- <div *ngIf='node$ | async as nodes'>
+      <ng-container *ngIf='openMenu'>
+        <div *ngFor="let node of nodes">
+          {{node?.linkName}}
+        </div>
+      </ng-container>
+     
+    </div> -->
+  </ng-container>
+  
+  <ng-template #login>
+    <a role="link" [routerLink]="{ cxRoute: 'login' } | cxUrl">
+        {{'myAccounts.signIn' | cxTranslate }} 
+        <ng-container *ngIf="soldTo | async as sold">
+          {{sold?.name}}
+        </ng-container>
+    </a>
+  </ng-template>
+
+  <ng-template #nothing>
+    <p>nothing</p>
+  </ng-template>
+  
